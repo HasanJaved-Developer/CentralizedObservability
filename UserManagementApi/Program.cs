@@ -8,7 +8,7 @@ using UserManagementApi;
 using UserManagementApi.Data;
 using UserManagementApi.DTO.Auth;
 using UserManagementApi.Infrastructure;
-using UserManagementApi.Middlewares;
+using SharedLibrary.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 

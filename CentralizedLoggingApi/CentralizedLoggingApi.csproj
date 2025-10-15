@@ -36,6 +36,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CentralizedLogging.Contracts\CentralizedLogging.Contracts.csproj" />
+    <ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj" />
   </ItemGroup>
 
 </Project>

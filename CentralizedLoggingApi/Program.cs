@@ -2,7 +2,7 @@ using CentralizedLoggingApi;
 using CentralizedLoggingApi.Data;
 using CentralizedLoggingApi.DTO.Auth;
 using CentralizedLoggingApi.Infrastructure;
-using CentralizedLoggingApi.Middlewares;
+using SharedLibrary.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

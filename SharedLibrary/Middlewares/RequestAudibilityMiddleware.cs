@@ -1,4 +1,7 @@
-﻿namespace UserManagementApi.Middlewares
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+
+namespace SharedLibrary.Middlewares
 {
     public class RequestAudibilityMiddleware
     {

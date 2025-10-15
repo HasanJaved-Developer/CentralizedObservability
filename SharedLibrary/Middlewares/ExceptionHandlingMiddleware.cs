@@ -1,6 +1,7 @@
-﻿using System.Net.Mime;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
-namespace UserManagementApi.Middlewares
+namespace SharedLibrary.Middlewares
 {
     public class ExceptionHandlingMiddleware
     {
