@@ -1,9 +1,18 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using UserManagement.Sdk.Extensions;
 using CentralizedLogging.Sdk.Extensions;
+using Serilog;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.WithProperty("Application", "IntegrationPortal")
+    .Enrich.FromLogContext()
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 // Add MemoryCache globally
 builder.Services.AddMemoryCache();
