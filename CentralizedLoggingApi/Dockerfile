@@ -4,6 +4,7 @@ WORKDIR /src
 
 # Copy CentralizedLoggingApi + the SDKs it depends on
 COPY CentralizedLogging.Contracts/CentralizedLogging.Contracts.csproj CentralizedLogging.Contracts/
+COPY SharedLibrary/SharedLibrary.csproj SharedLibrary/
 COPY CentralizedLoggingApi/CentralizedLoggingApi.csproj CentralizedLoggingApi/
 
 RUN dotnet restore CentralizedLoggingApi/CentralizedLoggingApi.csproj

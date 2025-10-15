@@ -4,6 +4,7 @@ WORKDIR /src
 
 # Copy UserManagementApi + the SDKs it depends on
 COPY UserManagement.Contracts/UserManagement.Contracts.csproj UserManagement.Contracts/
+COPY SharedLibrary/SharedLibrary.csproj SharedLibrary/
 COPY UserManagementApi/UserManagementApi.csproj UserManagementApi/
 
 RUN dotnet restore UserManagementApi/UserManagementApi.csproj
