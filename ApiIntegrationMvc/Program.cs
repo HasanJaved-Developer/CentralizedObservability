@@ -1,7 +1,11 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
-using UserManagement.Sdk.Extensions;
 using CentralizedLogging.Sdk.Extensions;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Serilog;
+using System.Diagnostics;
+using UserManagement.Sdk.Extensions;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,7 +43,24 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAuthorization();
 
+// OpenTelemetry + Jaeger
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(r => r.AddService(
+        serviceName: "IntegrationPortal", // <- change per project
+        serviceVersion: "1.0.0"))
+    .WithTracing(t => t
+        .AddAspNetCoreInstrumentation(o => { o.RecordException = true; })
+        .AddHttpClientInstrumentation()
+        .AddOtlpExporter(o =>
+        {
+            o.Endpoint = new Uri($"http://{builder.Configuration["JAEGER_HOST"]}:4317"); // host -> docker            
+            o.Protocol = OtlpExportProtocol.Grpc;
+        }));
+
 var app = builder.Build();
+app.UseSerilogRequestLogging(); // structured request logs
+
+app.MapGet("/health", () => Results.Ok("OK"));
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

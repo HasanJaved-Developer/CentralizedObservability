@@ -1,14 +1,17 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Serilog;
+using SharedLibrary.Middlewares;
 using System.Reflection;
 using System.Text;
 using UserManagementApi;
 using UserManagementApi.Data;
 using UserManagementApi.DTO.Auth;
 using UserManagementApi.Infrastructure;
-using SharedLibrary.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -100,7 +103,25 @@ builder.Services.AddSwaggerGen(c =>
 
 
 
+// OpenTelemetry + Jaeger
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(r => r.AddService(
+        serviceName: "UserAPI", // <- change per project
+        serviceVersion: "1.0.0"))
+    .WithTracing(t => t
+        .AddAspNetCoreInstrumentation(o => { o.RecordException = true; })
+        .AddHttpClientInstrumentation()
+        .AddOtlpExporter(o =>
+        {
+            o.Endpoint = new Uri($"http://{builder.Configuration["JAEGER_HOST"]}:4317"); // host -> docker            
+            o.Protocol = OtlpExportProtocol.Grpc;
+        }));
+
+
 var app = builder.Build();
+app.UseSerilogRequestLogging(); // structured request logs
+
+app.MapGet("/health", () => Results.Ok("OK"));
 
 app.Use(async (ctx, next) =>
 {

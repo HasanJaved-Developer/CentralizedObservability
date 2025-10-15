@@ -2,12 +2,15 @@ using CentralizedLoggingApi;
 using CentralizedLoggingApi.Data;
 using CentralizedLoggingApi.DTO.Auth;
 using CentralizedLoggingApi.Infrastructure;
-using SharedLibrary.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models; 
+using Microsoft.OpenApi.Models;
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Serilog;
+using SharedLibrary.Middlewares;
 using System.Reflection;
 using System.Text;
 
@@ -104,7 +107,24 @@ builder.Services.AddSwaggerGen(c =>
 
 });
 
+// OpenTelemetry + Jaeger
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(r => r.AddService(
+        serviceName: "CMLogAPI", // <- change per project
+        serviceVersion: "1.0.0"))
+    .WithTracing(t => t
+        .AddAspNetCoreInstrumentation(o => { o.RecordException = true; })
+        .AddHttpClientInstrumentation()
+        .AddOtlpExporter(o =>
+        {
+            o.Endpoint = new Uri($"http://{builder.Configuration["JAEGER_HOST"]}:4317"); // host -> docker            
+            o.Protocol = OtlpExportProtocol.Grpc;
+        }));
+
 var app = builder.Build();
+app.UseSerilogRequestLogging(); // structured request logs
+
+app.MapGet("/health", () => Results.Ok("OK"));
 
 app.Use(async (ctx, next) =>
 {
