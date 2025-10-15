@@ -12,7 +12,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    
+      jaeger:
+        condition: service_started
     volumes:
       - ./CentralizedLoggingApi/logs:/app/logs   
 
@@ -29,7 +30,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    
+      jaeger:
+        condition: service_started
     volumes:
       - ./UserManagementApi/logs:/app/logs    
 
@@ -51,6 +53,8 @@ services:
         condition: service_started
       userapi:
         condition: service_started
+      jaeger:
+        condition: service_started
 
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -68,6 +72,17 @@ services:
       start_period: 30s          
     volumes:
       - sql_data:/var/opt/mssql
+
+  # Jaeger (all-in-one: UI + collector + agent + storage)
+  jaeger:
+    image: jaegertracing/all-in-one:1.57
+    container_name: jaeger
+    ports:
+      - "16686:16686"   # Jaeger UI
+      - "4317:4317"     # OTLP gRPC (traces)
+      - "4318:4318"     # OTLP HTTP (traces)
+    environment:
+      - LOG_LEVEL=info
 
 volumes:
   sql_data:
