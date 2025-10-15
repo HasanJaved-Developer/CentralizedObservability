@@ -17,7 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
-    .Enrich.WithProperty("Application", "CentralizedLogging") // change if needed
+    .Enrich.WithProperty("Application", "CentralizedLogging.Api")
+    .Enrich.FromLogContext()
     .CreateLogger();
 
 builder.Host.UseSerilog();
