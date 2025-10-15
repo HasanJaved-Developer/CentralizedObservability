@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
+using OpenTelemetry.Trace; // <- this brings in Activity.RecordException(...)
 
 namespace SharedLibrary.Middlewares
 {
@@ -29,6 +31,25 @@ namespace SharedLibrary.Middlewares
             }
             catch (Exception ex)
             {
+
+                var activity = Activity.Current;
+                if (activity is not null)
+                {
+                    var tags = new ActivityTagsCollection
+                    {
+                        ["exception.type"] = ex.GetType().FullName,
+                        ["exception.message"] = ex.Message,
+                        ["exception.stacktrace"] = ex.ToString(),
+                    };
+
+                    // add the OpenTelemetry "exception" event to the current span
+                    activity.AddEvent(new ActivityEvent("exception", tags: tags));
+
+                    // mark the span as error so it shows red in Jaeger
+                    activity.SetStatus(ActivityStatusCode.Error, ex.Message);
+                }
+
+
                 // Log using Serilog (through ILogger)
                 _logger.LogError(ex, "Unhandled exception occurred while processing request {Path}", context.Request.Path);
 
