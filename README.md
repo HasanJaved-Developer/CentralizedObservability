@@ -33,7 +33,7 @@ It extends the earlier **Centralized Logging & Monitoring API** project with:
 - ✅ **Serilog** for structured logging  
 - 🟣 **Jaeger (via OpenTelemetry)** for distributed tracing  
 - 🧩 **Docker Compose stack** for local observability setup  
-- 🚀 **GitHub Actions CI/CD** for multi-arch image builds and releases  
+- 🚀 **GitHub Actions CI/CD** for image builds and pushes whenever a version tag (e.g., v1.2.3) is pushed to the master branch.  
 - 📊 **Codecov** integration for coverage insights  
 
 ---
