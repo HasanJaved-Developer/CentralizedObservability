@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/hasanjaved-developer/CentralizedObservability/actions/workflows/dotnet-tests.yml/badge.svg?branch=master)](https://github.com/hasanjaved-developer/CentralizedObservability/actions/workflows/dotnet-tests.yml)
 [![codecov](https://codecov.io/gh/hasanjaved-developer/CentralizedObservability/branch/master/graph/badge.svg)](https://codecov.io/gh/hasanjaved-developer/CentralizedObservability)
-[![Docker Compose CI](https://github.com/hasanjaved-developer/CentralizedObservability/actions/workflows/docker-compose-ci.yml/badge.svg)](https://github.com/<OWNER>/<REPO>/actions/workflows/docker-compose-ci.yml)
+[![Docker Compose CI](https://github.com/hasanjaved-developer/CentralizedObservability/actions/workflows/docker-compose-ci.yml/badge.svg)](https://github.com/hasanjaved-developer/CentralizedObservability/actions/workflows/docker-compose-ci.yml)
 [![License](https://img.shields.io/github/license/hasanjaved-developer/CentralizedObservability)](LICENSE.txt)
 [![Release](https://img.shields.io/github/v/tag/hasanjaved-developer/CentralizedObservability?label=release&sort=semver)](https://github.com/hasanjaved-developer/CentralizedObservability/tags)
 [![GHCR api](https://img.shields.io/badge/ghcr.io-centralized--logging%2Fapi-blue?logo=github)](https://ghcr.io/hasanjaved-developer/centralized-observability/api)
