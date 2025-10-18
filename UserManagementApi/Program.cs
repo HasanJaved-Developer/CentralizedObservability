@@ -5,6 +5,7 @@ using OpenTelemetry.Exporter;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
+using SharedLibrary;
 using SharedLibrary.Middlewares;
 using System.Reflection;
 using System.Text;
@@ -19,6 +20,7 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.WithProperty("Application", "UserManagement.Api")
     .Enrich.FromLogContext()
+    .Enrich.With(new ActivityTraceEnricher())  // <-- custom enricher
     .CreateLogger();
 
 builder.Host.UseSerilog();
@@ -122,16 +124,6 @@ var app = builder.Build();
 app.UseSerilogRequestLogging(); // structured request logs
 
 app.MapGet("/health", () => Results.Ok("OK"));
-
-app.Use(async (ctx, next) =>
-{
-    using (Serilog.Context.LogContext.PushProperty("Environment", app.Environment.EnvironmentName))
-    using (Serilog.Context.LogContext.PushProperty("Service", "CoreAPI"))
-    using (Serilog.Context.LogContext.PushProperty("CorrelationId", ctx.TraceIdentifier))
-    {
-        await next();
-    }
-});
 
 // Middleware should be early in the pipeline
 app.UseMiddleware<RequestAudibilityMiddleware>();

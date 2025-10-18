@@ -1,6 +1,6 @@
 # 🛰️ Centralized Observability Platform
 
-[![Build](https://github.com/hasanjaved-developer/CentralizedObservability/actions/workflows/dotnet-tests.yml/badge.svg?branch=master)](https://github.com/hasanjaved-developer/CentralizedObservability/actions/workflows/dotnet-tests.yml)
+[![Build](https://github.com/hasanjaved-developer/CentralizedObservability/actions/workflows/dotnet-tests.yml/badge.svg?branch=v1.0.2)](https://github.com/hasanjaved-developer/CentralizedLoggingMonitoring/actions/workflows/dotnet-tests.yml)
 [![codecov](https://codecov.io/gh/hasanjaved-developer/CentralizedObservability/branch/master/graph/badge.svg)](https://codecov.io/gh/hasanjaved-developer/CentralizedObservability)
 [![Docker Compose CI](https://github.com/hasanjaved-developer/CentralizedObservability/actions/workflows/docker-compose-ci.yml/badge.svg)](https://github.com/hasanjaved-developer/CentralizedObservability/actions/workflows/docker-compose-ci.yml)
 [![License](https://img.shields.io/github/license/hasanjaved-developer/CentralizedObservability)](LICENSE.txt)
@@ -13,27 +13,30 @@
 
 | Service | Pulls | Size | Version |
 |----------|-------|------|----------|
-| **API** | [![Pulls](https://img.shields.io/docker/pulls/hasanjaveddeveloper/centralized-observability-api)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-api) | [![Size](https://img.shields.io/docker/image-size/hasanjaveddeveloper/centralized-observability-api/latest)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-api/tags) | [![Version](https://img.shields.io/docker/v/hasanjaveddeveloper/centralized-observability-api?sort=semver)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-api/tags) |
-| **User API** | [![Pulls](https://img.shields.io/docker/pulls/hasanjaveddeveloper/centralized-observability-userapi)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-userapi) | [![Size](https://img.shields.io/docker/image-size/hasanjaveddeveloper/centralized-observability-userapi/latest)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-userapi/tags) | [![Version](https://img.shields.io/docker/v/hasanjaveddeveloper/centralized-observability-userapi?sort=semver)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-userapi/tags) |
-| **Web (Portal)** | [![Pulls](https://img.shields.io/docker/pulls/hasanjaveddeveloper/centralized-observability-web)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-web) | [![Size](https://img.shields.io/docker/image-size/hasanjaveddeveloper/centralized-observability-web/latest)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-web/tags) | [![Version](https://img.shields.io/docker/v/hasanjaveddeveloper/centralized-observability-web?sort=semver)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-web/tags) |
+| **API** | [![Pulls](https://img.shields.io/docker/pulls/hasanjaveddeveloper/centralized-observability-api)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-api) | [![Size](https://img.shields.io/docker/image-size/hasanjaveddeveloper/centralized-observability-api/v1.0.2)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-api/tags) | [![Version](https://img.shields.io/docker/v/hasanjaveddeveloper/centralized-observability-api?sort=semver)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-api/tags) |
+| **User API** | [![Pulls](https://img.shields.io/docker/pulls/hasanjaveddeveloper/centralized-observability-userapi)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-userapi) | [![Size](https://img.shields.io/docker/image-size/hasanjaveddeveloper/centralized-observability-userapi/v1.0.2)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-userapi/tags) | [![Version](https://img.shields.io/docker/v/hasanjaveddeveloper/centralized-observability-userapi?sort=semver)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-userapi/tags) |
+| **Web (Portal)** | [![Pulls](https://img.shields.io/docker/pulls/hasanjaveddeveloper/centralized-observability-web)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-web) | [![Size](https://img.shields.io/docker/image-size/hasanjaveddeveloper/centralized-observability-web/v1.0.2)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-web/tags) | [![Version](https://img.shields.io/docker/v/hasanjaveddeveloper/centralized-observability-web?sort=semver)](https://hub.docker.com/r/hasanjaveddeveloper/centralized-observability-web/tags) |
 
-The Centralized Observability Platform is a proof-of-concept built with .NET 9, designed to demonstrate unified observability practices — combining structured logging (Serilog), distributed tracing (Jaeger via OpenTelemetry), and future support for metrics.
+The **Centralized Observability Platform** is a .NET 9 proof-of-concept that demonstrates **unified observability practices across services—**with **structured logging** (Serilog file sinks) and **distributed tracing** (OpenTelemetry → **Jaeger**). Metrics are planned for a subsequent phase.
 
-The project extends the earlier Centralized Logging & Monitoring API to include full-fledged trace visualization and request correlation across microservices, enabling end-to-end visibility into system behavior and performance.
+Evolving from the earlier Centralized Logging & Monitoring work, this repo adds **full trace visualization** and **request correlation** across services, enabling end-to-end debugging through Jaeger while keeping logs locally for now.
 
-CI/CD pipelines with GitHub Actions, multi-arch Docker images, and environment-ready compose stacks make this project a production-grade observability showcase for modern .NET solutions.
+**CI/CD:** GitHub Actions builds and publishes **amd64** Docker images using Buildx (QEMU pre-setup for future multi-arch). **Tag-based builds** are pushed to **GHCR** and optionally mirrored to **Docker Hub**. The repo provides **separate Docker Compose stacks** for each registry, enabling quick environment setup and validation.
 
 ---
 
 ## 🧭 Overview
 
-The **Centralized Observability Platform** is a modern observability showcase built with **.NET 9**, combining structured logging, distributed tracing, and visualization into one cohesive stack.
+The **Centralized Observability Platform** is a modern observability showcase built with **.NET 9**, featuring structured logging, distributed tracing, and trace visualization integrated through Jaeger.
 
 It extends the earlier **Centralized Logging & Monitoring API** project with:
+
+- 🧠 **Centralized ActivityTraceEnricher** automatically enriches logs with TraceId and SpanId for distributed correlation
+- ⚙️ **Centralized Exception & Audibility Middleware** ensures consistent error handling and request/response logging across all APIs
 - ✅ **Serilog** for structured logging  
 - 🟣 **Jaeger (via OpenTelemetry)** for distributed tracing  
 - 🧩 **Docker Compose stack** for local observability setup  
-- 🚀 **GitHub Actions CI/CD** for multi-arch image builds and releases  
+- 🚀 **GitHub Actions CI/CD** for image builds and tests  
 - 📊 **Codecov** integration for coverage insights  
 
 ---
@@ -53,7 +56,17 @@ It extends the earlier **Centralized Logging & Monitoring API** project with:
 ---
 
 ## 🧩 Architecture Snapshot
-*(To be added later — include a Mermaid diagram showing Serilog → OpenTelemetry → Jaeger → UI)*
+
+![Integration Portal Architecture](docs/integration_portal_architecture.png)  
+<sub>[View Mermaid source](docs/integration_portal_architecture.mmd)</sub>
+
+---
+
+### 📸 Screenshots
+
+### 🔑 Login Page
+
+![Login Page](docs/screenshots/jaeger.png)
 
 ---
 
