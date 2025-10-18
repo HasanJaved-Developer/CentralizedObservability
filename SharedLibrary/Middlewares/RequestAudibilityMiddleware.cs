@@ -16,11 +16,8 @@ namespace SharedLibrary.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var requestId = context.TraceIdentifier;
-
             // Log request info
-            _logger.LogInformation("Incoming request {RequestId} {Method} {Path} from {RemoteIp}",
-                requestId,
+            _logger.LogInformation("Incoming request {Method} {Path} from {RemoteIp}",                
                 context.Request.Method,
                 context.Request.Path,
                 context.Connection.RemoteIpAddress?.ToString());
@@ -42,8 +39,10 @@ namespace SharedLibrary.Middlewares
                 var responseText = await new StreamReader(context.Response.Body).ReadToEndAsync();
                 context.Response.Body.Seek(0, SeekOrigin.Begin);
 
-                _logger.LogInformation("Outgoing response {RequestId} with status {StatusCode}, length {Length}",
-                    requestId,
+                _logger.LogInformation("Outgoing response {Method} {Path}{Query} -> with status {StatusCode}, length {Length}",
+                     context.Request.Method,
+                    context.Request.Path.Value,
+                    context.Request.QueryString.HasValue ? context.Request.QueryString.Value : "",
                     context.Response.StatusCode,
                     responseText?.Length);
 

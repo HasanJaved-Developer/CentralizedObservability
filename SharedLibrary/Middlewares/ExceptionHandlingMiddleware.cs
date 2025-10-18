@@ -25,8 +25,10 @@ namespace SharedLibrary.Middlewares
             catch (OperationCanceledException oce) when (context.RequestAborted.IsCancellationRequested)
             {
                 // Client aborted; don’t try to write a response body.
-                _logger.LogWarning(oce, "Request aborted by client {Path} ({TraceId})",
-                    context.Request.Path, context.TraceIdentifier);
+                _logger.LogWarning(oce, "Request aborted by client {Method} {Path} (StatusCode={StatusCode})",
+                    context.Request.Method,
+                    context.Request.Path,
+                    context.Response?.StatusCode);
                 // Let it bubble or just return; here we just return.
             }
             catch (Exception ex)
