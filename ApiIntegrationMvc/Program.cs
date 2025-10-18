@@ -1,10 +1,11 @@
+using ApiIntegrationMvc;
 using CentralizedLogging.Sdk.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
-using System.Diagnostics;
+using SharedLibrary;
 using UserManagement.Sdk.Extensions;
 
 
@@ -14,6 +15,7 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.WithProperty("Application", "IntegrationPortal")
     .Enrich.FromLogContext()
+    .Enrich.With(new ActivityTraceEnricher())  // <-- custom enricher
     .CreateLogger();
 
 builder.Host.UseSerilog();

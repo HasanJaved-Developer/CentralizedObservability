@@ -7,6 +7,7 @@ COPY UserManagement.Contracts/UserManagement.Contracts.csproj UserManagement.Con
 COPY CentralizedLogging.Contracts/CentralizedLogging.Contracts.csproj CentralizedLogging.Contracts/
 COPY UserManagement.Sdk/UserManagement.Sdk.csproj UserManagement.Sdk/
 COPY CentralizedLogging.Sdk/CentralizedLogging.Sdk.csproj CentralizedLogging.Sdk/
+COPY SharedLibrary/SharedLibrary.csproj SharedLibrary/
 COPY ApiIntegrationMvc/ApiIntegrationMvc.csproj ApiIntegrationMvc/
 
 RUN dotnet restore ApiIntegrationMvc/ApiIntegrationMvc.csproj
