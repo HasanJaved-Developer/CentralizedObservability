@@ -64,9 +64,9 @@ It extends the earlier **Centralized Logging & Monitoring API** project with:
 
 ### 📸 Screenshots
 
-### 🔑 Login Page
+### 🔑 Jaeger
 
-![Login Page](docs/screenshots/jaeger.png)
+![Jaeger](docs/screenshots/jaeger.png)
 
 ---
 
